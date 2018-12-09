@@ -1,0 +1,6 @@
+CREATE TABLE  sa.`users` (     `user_id` INT NOT NULL AUTO_INCREMENT,     `email` VARCHAR( 100 ) NOT NULL ,     `password` VARCHAR( 20 ) NOT NULL,     `name` VARCHAR( 20 ) NOT NULL,      `dateofBirth` datetime NOT NULL,     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,     `updated_at` datetime DEFAULT NULL,  PRIMARY KEY (user_id) )
+
+
+CREATE TABLE sa.`node_data` (   `node_data_id` int(11) NOT NULL auto_increment,   `humidity` float(9,2),   `temperature` float(9,2),   `vibration` int(11),   `user_Id` int(11) NOT NULL,   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,   PRIMARY KEY  (node_data_id),   CONSTRAINT FK_UserNodeData FOREIGN KEY (user_id)   REFERENCES users(user_id) )
+
+CREATE TABLE sa.`user_sleeptime` (   `user_sleeptime_id` int(11) NOT NULL auto_increment,   `quantity_hours` int(11),  `user_Id` int(11) NOT NULL,   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,   PRIMARY KEY  (user_sleeptime_id),   CONSTRAINT FK_UserSleepTime FOREIGN KEY (user_id)   REFERENCES users(user_id) )
