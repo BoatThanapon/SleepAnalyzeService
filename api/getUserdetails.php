@@ -1,7 +1,7 @@
 
 <?php
     
-    require_once 'user.php';
+    require_once '../user.php';
     
     if(isset($_GET['id'])){
         $id = $_GET['id'];
