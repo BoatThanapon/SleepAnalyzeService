@@ -23,27 +23,6 @@
             $this->db = new DbConnect();
         }
         
-        public function isLoginExist($email, $password){
-            
-            $query = "select * from ".$this->db_table." where email = '$email' AND password = '$password' Limit 1";
-            
-            $result = mysqli_query($this->db->getDb(), $query);
-            
-            if(mysqli_num_rows($result) > 0){
-                
-                mysqli_close($this->db->getDb());
-                
-                
-                return true;
-                
-            }
-            
-            mysqli_close($this->db->getDb());
-            
-            return false;
-            
-        }
-        
         public function isEmailUsernameExist($email){
             
             $query = "select * from ".$this->db_table." where email = '$email'";
@@ -92,6 +71,7 @@
                     
                     $json['success'] = true;
                     $json['message'] = "Successfully registered the user";
+                    $json['user_id'] =  mysqli_insert_id($this->db->getDb());
                     
                 }else{
                     
@@ -118,15 +98,26 @@
             $json = array();
             
             $canUserLogin = $this->isLoginExist($email, $password);
+
+            $query = "select * from ".$this->db_table." where email = '$email' AND password = '$password' Limit 1";
             
-            if($canUserLogin){
-                
+            $result = mysqli_query($this->db->getDb(), $query);
+            
+            if(mysqli_num_rows($result) > 0){
+
+                $row = mysqli_fetch_assoc($result);
+                $user_id =  $row['user_id'];
                 $json['success'] = true;
                 $json['message'] = "Successfully logged in";
+                $json['user_id'] = $user_id;
+                mysqli_close($this->db->getDb());
                 
-            }else{
+            }
+           else{
                 $json['success'] = false;
                 $json['message'] = "Incorrect details";
+                mysqli_close($this->db->getDb());
+
             }
             return $json;
         }
@@ -146,6 +137,7 @@
                         $to   = new DateTime('today');
                         $age = $from->diff($to)->y;
                         $resultArray['id'] = $row['user_id'];
+                        $resultArray['email'] = $row['email'];
                         $resultArray['name'] = $row['name'];
                         $resultArray['age'] = $age;
                         $resultArray['dateofBirth'] = $row['dateofBirth'];
@@ -180,7 +172,7 @@
                     $result = mysqli_query($this->db->getDb(), $query);
     
                     $json['success'] = true;
-                    $json['message'] = ['id' => $id];
+                    $json['user_id'] = $id;
             }else {
                 $json['success'] = false;
                 $json['message'] = "User not found";
