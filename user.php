@@ -97,8 +97,6 @@
             
             $json = array();
             
-            $canUserLogin = $this->isLoginExist($email, $password);
-
             $query = "select * from ".$this->db_table." where email = '$email' AND password = '$password' Limit 1";
             
             $result = mysqli_query($this->db->getDb(), $query);
