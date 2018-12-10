@@ -11,7 +11,8 @@
     if(isset($_GET['hours']))
     {
         $hours = $_GET['hours'];
-        $json_array = $historyObject->getHistorySleepTimebyUserid($userID, $hours);
+        $minutes = $_GET['minutes'];
+        $json_array = $historyObject->getHistorySleepTimebyUserid($userID, $hours,$minutes);
         echo $json_array;
     }
     else {

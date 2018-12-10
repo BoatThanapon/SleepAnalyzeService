@@ -3,11 +3,11 @@
 
     class History
     {
-        public function getHistorySleepTimebyUserid($userID, $hours){
+        public function getHistorySleepTimebyUserid($userID, $hours, $minutes){
             date_default_timezone_set('Asia/Bangkok');
             $now = date('Y-m-d H:i:s');
-            $fromDate = date("Y-m-d H:i:s", strtotime('-'.$hours.' hours'));
-            
+            $fromDate = date("Y-m-d H:i:s", strtotime('-'.$hours.' hours '.'-'.$minutes.' minutes'));
+
             // echo $fromDate.' - ';
             // echo $now;
     
