@@ -135,6 +135,7 @@
                         $to   = new DateTime('today');
                         $age = $from->diff($to)->y;
                         $resultArray['id'] = $row['user_id'];
+                        $resultArray['password'] = $row['password'];
                         $resultArray['email'] = $row['email'];
                         $resultArray['name'] = $row['name'];
                         $resultArray['age'] = $age;
