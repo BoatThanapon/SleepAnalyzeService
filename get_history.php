@@ -23,14 +23,27 @@
         public function getHistory($userID, $fromDateP, $toDateP){
             $fromDate = date("Y-m-d", strtotime($fromDateP)).' '.'00:00:00';
             $toDate = date("Y-m-d", strtotime($toDateP)).' '.'23:59:59';
-            $sqldata = mysql_query("SELECT * FROM `node_data` WHERE user_Id = '$userID' and created_at between '$fromDate' and '$toDate'");
-    
-            $rows = array();
-            while($r = mysql_fetch_assoc($sqldata)) {
-                $rows[] = $r;
-            }
             
-            return json_encode($rows);
+            if($fromDateP == "" || $toDateP == "")
+            {
+                $sqldata = mysql_query("SELECT * FROM `user_sleeptime` WHERE user_Id = '$userID'");
+    
+                $rows = array();
+                while($r = mysql_fetch_assoc($sqldata)) {
+                    $rows[] = $r;
+                }
+                
+                return json_encode($rows);
+            }
+            else {
+                $sqldata = mysql_query("SELECT * FROM `node_data` WHERE user_Id = '$userID' and created_at between '$fromDate' and '$toDate'");
+                $rows = array();
+                while($r = mysql_fetch_assoc($sqldata)) {
+                    $rows[] = $r;
+                }
+                
+                return json_encode($rows);
+            }
         }
     }
         
